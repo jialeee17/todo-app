@@ -33,6 +33,20 @@ const showingNavigationDropdown = ref(false);
                                     Dashboard
                                 </NavLink>
                             </div>
+
+                            <!-- ToDos -->
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink :href="route('todos.index')" :active="route().current('todos.index')">
+                                    ToDos
+                                </NavLink>
+                            </div>
+
+                            <!-- Activity Logs -->
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink :href="route('activityLogs.index')" :active="route().current('activityLogs.index')">
+                                    Activity Logs
+                                </NavLink>
+                            </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
