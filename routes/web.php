@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ActivityLogsController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ToDoController;
+use App\Http\Controllers\ToDosController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // ToDos
-    Route::resource('todos', ToDoController::class);
+    Route::resource('todos', ToDosController::class);
 
     // Activity Logs
     Route::prefix('activityLogs')->name('activityLogs.')->group(function () {
