@@ -36,10 +36,26 @@ class ActivityLog extends Model
         'performed_by'
     ];
 
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+    ];
+
     // Types (Events)
     const TYPE_CREATE = 'CREATE';
     const TYPE_UPDATE = 'UPDATE';
     const TYPE_DELETE = 'DELETE';
+
+    public static $types = [
+        self::TYPE_CREATE,
+        self::TYPE_UPDATE,
+        self::TYPE_DELETE
+    ];
 
     /* -------------------------------------------------------------------------- */
     /*                                Relationship                                */

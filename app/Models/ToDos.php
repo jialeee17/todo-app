@@ -38,6 +38,16 @@ class ToDos extends Model
         'status'
     ];
 
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+    ];
+
     /* -------------------------------------------------------------------------- */
     /*                                Relationship                                */
     /* -------------------------------------------------------------------------- */
