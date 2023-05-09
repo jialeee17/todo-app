@@ -19,18 +19,14 @@ class ActivityLogController extends Controller
         try {
             $activityLog = ActivityLog::with('user')->get();
 
-            if (!$activityLog) {
-                throw new Exception('Activity Log Not Found');
-            }
-
             return response()->json([
-                'Success' => true,
+                'success' => true,
                 'data' => $activityLog,
             ], 200);
         } catch (Exception $e) {
             return response()->json([
-                'Success' => false,
-                'Message' => $e->getMessage()
+                'success' => false,
+                'message' => $e->getMessage()
             ], 500);
         }
     }
