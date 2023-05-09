@@ -4,10 +4,10 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\ToDos;
+use App\Models\ActivityLog;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -58,5 +58,10 @@ class User extends Authenticatable
     public function todos()
     {
         return $this->hasMany(ToDos::class);
+    }
+
+    public function activityLog()
+    {
+        return $this->hasMany(ActivityLog::class);
     }
 }
