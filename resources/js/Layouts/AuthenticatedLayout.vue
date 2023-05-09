@@ -41,10 +41,10 @@ const showingNavigationDropdown = ref(false);
                                 </NavLink>
                             </div>
 
-                            <!-- Activity Logs -->
+                            <!-- Activity Log -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('activityLogs.index')" :active="route().current('activityLogs.index')">
-                                    Activity Logs
+                                <NavLink :href="route('activityLog.index')" :active="route().current('activityLog.index')">
+                                    Activity Log
                                 </NavLink>
                             </div>
                         </div>

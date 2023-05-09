@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ActivityLogsController;
+use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ToDosController;
 use Illuminate\Foundation\Application;
@@ -42,9 +42,9 @@ Route::middleware('auth')->group(function () {
     // ToDos
     Route::resource('todos', ToDosController::class);
 
-    // Activity Logs
-    Route::prefix('activityLogs')->name('activityLogs.')->group(function () {
-        Route::get('/', [ActivityLogsController::class, 'index'])->name('index');
+    // Activity Log
+    Route::prefix('activityLog')->name('activityLog.')->group(function () {
+        Route::get('/', [ActivityLogController::class, 'index'])->name('index');
     });
 });
 
