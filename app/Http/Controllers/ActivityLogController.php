@@ -17,11 +17,25 @@ class ActivityLogController extends Controller
     public function getActivityLogData(Request $request)
     {
         try {
-            $activityLog = ActivityLog::with('user')->get();
+            $offset = $request->offset;
+            $limit = $request->limit;
+            // The page number to use as the starting point for pagination.
+            $page = $offset == 0 ? 1 : ($offset / $limit) + 1;
+
+            // Get the total number of records, regardless of pagination or filtering.
+            $activityLogNotFiltered = ActivityLog::count();
+
+            $activityLog = ActivityLog::with('user')->paginate($limit, ['*'], 'page', $page);
+
+            $result = [
+                'total' => $activityLog->total(),
+                'totalNotFiltered' => $activityLogNotFiltered,
+                'rows' => $activityLog->items(),
+            ];
 
             return response()->json([
                 'success' => true,
-                'data' => $activityLog,
+                'data' => $result,
             ], 200);
         } catch (Exception $e) {
             return response()->json([

@@ -8,6 +8,7 @@ function ajaxRequest(params) {
     $.ajax({
         url: route('activityLog.data'),
         method: "GET",
+        data: params.data,
         success: function(response) {
             params.success(response.data);
         },
@@ -20,10 +21,6 @@ function ajaxRequest(params) {
             console.log("Request completed with status: " + textStatus);
         }
     });
-}
-
-function queryParams(params) {
-    //
 }
 
 function columns() {
@@ -53,8 +50,10 @@ onMounted(() => {
         ajax: ajaxRequest,
         columns: columns(),
         pagination: true,
-        // queryParams: queryParams,
-        // sidePagination: 'server',
+        sidePagination: 'server',
+        paginationVAlign: 'both',
+        pageSize: 25,
+        pageList:"[25, 50, 75, 100]",
     })
 })
 </script>
