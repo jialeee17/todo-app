@@ -38,40 +38,121 @@ onMounted(() => {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">ToDos - Edit</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">ToDos</h2>
         </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    Edit Todo
+        <ContainerLayout #content>
+            <div class="row">
+                <div class="col">
                     <form @submit.prevent="submitForm">
                         <!-- Title -->
-                        <div class="form-group">
-                            <label for="title">Title *</label>
-                            <input type="text" id="title" name="title" v-model="form.title">
+                        <div class="form-group col-6 p-0">
+                            <label for="title">Title <b class="text-danger">*</b></label>
+                            <input type="text" class="form-control" id="title" name="title" placeholder="Title" v-model="form.title">
                             <p v-if="form.errors.title" style="color: red;">{{ form.errors.title }}</p>
                         </div>
                         <!-- Description -->
-                        <div class="form-group">
+                        <div class="form-group col-6 p-0">
                             <label for="description">Description</label>
-                            <textarea name="description" id="description" cols="50" rows="1" v-model="form.description"></textarea>
+                            <textarea name="description" class="form-control" id="description" placeholder="Description" v-model="form.description"></textarea>
                         </div>
                         <!-- Status -->
-                        <label for="status">Status</label>
-                        <input type="checkbox" id="status" name="status" v-model="form.status" :checked="isChecked">
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <div class="button btn-toggle r">
+                                <input type="checkbox" class="checkbox" id="status" name="status" v-model="form.status" :checked="isChecked"/>
+                                <div class="knobs"></div>
+                                <div class="layer"></div>
+                            </div>
+                        </div>
 
                         <!-- Submit Button -->
-                        <button type="submit" :disabled="form.processing" style="color: blue;">Save</button>
+                        <button type="submit" class="btn btn-primary" :disabled="form.processing">Save</button>
                     </form>
                 </div>
             </div>
-        </div>
+        </ContainerLayout>
     </AuthenticatedLayout>
 </template>
 
 <style scoped>
-label {
-    display: block;
+.button {
+  position: relative;
+  /* top: 50%; */
+  width: 70px;
+  height: 30px;
+  /* overflow: hidden; */
+}
+.checkbox {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.button.r,
+.button.r .layer {
+  border-radius: 100px;
+}
+
+.knobs,
+.layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.knobs {
+  z-index: 2;
+}
+
+.layer {
+    background-color: #fcebeb;
+    transition: 0.3s ease all;
+    width: 100%;
+    z-index: 1;
+}
+
+.btn-toggle .knobs:before {
+  /* content: "OFF"; */
+  content: "";
+  color: #fff;
+  background-color: #f44336;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1;
+  padding: 9px 4px;
+  position: absolute;
+  transition: 0.3s ease all, left 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
+  width: 30px;
+  height: 30px;
+}
+
+.btn-toggle .checkbox:active + .knobs:before {
+  width: 46px;
+  border-radius: 100px;
+}
+
+.btn-toggle .checkbox:checked:active + .knobs:before {
+  margin-left: -26px;
+}
+
+.btn-toggle .checkbox:checked + .knobs:before {
+  /* content: "ON"; */
+  content: "";
+  left: 42px;
+  background-color: #03a9f4;
+}
+
+.btn-toggle .checkbox:checked ~ .layer {
+  background-color: #ebf7fc;
 }
 </style>

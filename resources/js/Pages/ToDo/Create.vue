@@ -29,46 +29,34 @@ function submitForm() {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">ToDos - Create</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">ToDos</h2>
         </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <button type="button" style="color: blue;" @click="addTodo">Add Todo</button>
+        <ContainerLayout #content>
+            <div class="row">
+                <div class="col">
+                    <form v-if="form.todos.length > 0" class="mb-3" @submit.prevent="submitForm">
+                        <div v-for="(todo, index) in form.todos" :key="index">
+                            <!-- Title -->
+                            <div class="form-group col-6 p-0">
+                                <label for="title">Title <b class="text-danger">*</b></label>
+                                <input type="text" class="form-control" id="title" name="title" placeholder="Title" v-model="todo.title" required>
+                                <p v-if="form.errors['todos.0.title']" style="color: red;">{{ form.errors['todos.0.title'] }}</p>
+                            </div>
+                            <!-- Description -->
+                            <div class="form-group col-6 p-0">
+                                <label for="description">Description</label>
+                                <textarea name="description" class="form-control" id="description" placeholder="Description" v-model="todo.description"></textarea>
+                            </div>
+                        </div>
 
-                    <div>
-                        <template v-if="form.todos.length > 0">
-                            <h2 style="font-weight: bold;">--- FORM ---</h2>
-                            <form @submit.prevent="submitForm">
-                                <div v-for="(todo, index) in form.todos" :key="index" style="background: yellowgreen">
-                                    <!-- Title -->
-                                    <div class="form-group">
-                                        <label for="title">Title *</label>
-                                        <input type="text" id="title" name="title" v-model="todo.title">
-                                        <p v-if="form.errors['todos.0.title']" style="color: red;">{{ form.errors['todos.0.title'] }}</p>
-                                    </div>
-                                    <!-- Description -->
-                                    <div class="form-group">
-                                        <label for="description">Description</label>
-                                        <textarea name="description" id="description" cols="50" rows="1" v-model="todo.description"></textarea>
-                                    </div>
-                                </div>
+                        <button type="submit" class="btn btn-primary" :disabled="form.processing">Save</button>
+                    </form>
+                    <p v-else>Click the 'Add Todo' button to add your todo now!</p>
 
-                                <!-- Submit Button -->
-                                <button type="submit" :disabled="form.processing" style="color: blue;">Save</button>
-                            </form>
-                        </template>
-                        <p v-else>Click the 'Add Todo' button to add your todo now!</p>
-                    </div>
+                    <button type="button" class="btn btn-light" @click="addTodo">Add Todo</button>
                 </div>
             </div>
-        </div>
+        </ContainerLayout>
     </AuthenticatedLayout>
 </template>
-
-<style scoped>
-label {
-    display: block;
-}
-</style>

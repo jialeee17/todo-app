@@ -16,36 +16,44 @@ const todoStatus = computed(() => props.todo.status === 0 ? 'In-progress' : 'Com
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">ToDos - View</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">ToDos</h2>
         </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <Link :href="route('todos.edit', { todo: todo.id })" style="color: blue;">Edit</Link>
-                    <!-- Title -->
-                    <div class="title">
-                        <h3 style="font-weight: bold;">Title: </h3>
-                        <p>{{ todo.title }}</p>
+        <ContainerLayout #content>
+            <div class="row">
+                <div class="col">
+                    <div class="details mb-3">
+                        <div class="mb-1">
+                            <h4 class="title d-inline-block mr-2">Title: </h4>
+                            <span>{{ todo.title }}</span>
+                        </div>
+                        <div class="mb-1">
+                            <h4 class="description d-inline-block mr-2">Description: </h4>
+                            <span v-if="todo.description">{{ todo.description }}</span>
+                            <span v-else>NULL</span>
+                        </div>
+                        <div class="mb-1">
+                            <h4 class="status d-inline-block mr-2">Status: </h4>
+                            <span>{{ todoStatus }}</span>
+                        </div>
+                        <div class="mb-1">
+                            <h4 class="created-at d-inline-block mr-2">Created At: </h4>
+                            <span>{{ todo.created_at }}</span>
+                        </div>
                     </div>
-                    <!-- Description -->
-                    <div class="description">
-                        <h3 style="font-weight: bold;">Description: </h3>
-                        <p v-if="todo.description">{{ todo.description }}</p>
-                        <p v-else>NULL</p>
-                    </div>
-                    <!-- Status -->
-                    <div class="status">
-                        <h3 style="font-weight: bold;">Status: </h3>
-                        <p>{{ todoStatus }}</p>
-                    </div>
-                    <!-- Created At -->
-                    <div class="created-at">
-                        <h3 style="font-weight: bold;">Created At: </h3>
-                        <p>{{ todo.created_at }}</p>
-                    </div>
+
+                    <Link :href="route('todos.edit', { todo: todo.id })" class="btn btn-light">Edit</Link>
                 </div>
             </div>
-        </div>
+        </ContainerLayout>
     </AuthenticatedLayout>
 </template>
+
+<style scoped>
+    .title,
+    .description,
+    .status,
+    .created-at {
+        font-size: 1.125rem !important;
+    }
+</style>
