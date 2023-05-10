@@ -57,7 +57,7 @@ function backToPreviousPage() {
                     <p v-else>Click the 'Add Todo' button to add your todo now!</p>
 
                     <button type="button" class="btn btn-light mr-3" @click="addTodo">Add Todo</button>
-                    <button type="button" class="btn btn-danger" @click="backToPreviousPage">Back</button>
+                    <!-- <button type="button" class="btn btn-danger" @click="backToPreviousPage">Back</button> -->
                 </div>
             </div>
         </ContainerLayout>

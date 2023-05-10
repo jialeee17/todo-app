@@ -76,13 +76,13 @@ onMounted(() => {
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Activity Log</h2>
         </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <ContainerLayout #content>
+            <div class="row">
+                <div class="col">
                     <table id="activity-log-table"></table>
                 </div>
             </div>
-        </div>
+        </ContainerLayout>
     </AuthenticatedLayout>
 </template>
 

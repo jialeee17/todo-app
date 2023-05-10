@@ -69,7 +69,7 @@ onMounted(() => {
                         </div>
 
                         <button type="submit" class="btn btn-primary mr-3" :disabled="form.processing">Save</button>
-                        <button type="button" class="btn btn-danger" @click="backToPreviousPage">Back</button>
+                        <!-- <button type="button" class="btn btn-danger" @click="backToPreviousPage">Back</button> -->
                     </form>
                 </div>
             </div>

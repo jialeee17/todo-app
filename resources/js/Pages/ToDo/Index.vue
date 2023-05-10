@@ -3,6 +3,14 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 
 defineProps({ todos: Object })
+
+// Functions
+function completedClass(todo) {
+    return {
+        'text-muted': todo.status === 1 ? true : false,
+        'text-line-through': todo.status === 1 ? true : false
+    }
+}
 </script>
 
 <template>
@@ -19,11 +27,15 @@ defineProps({ todos: Object })
                     <template v-if="todos.length > 0">
                         <h3>Todo List</h3>
                         <ul class="todos-list p-0">
-                            <li v-for="(todo, index) in todos" class="list-unstyled mb-2">
+                            <li v-for="(todo, index) in todos" class="list-unstyled mb-2" :class="completedClass(todo)">
                                 {{ todo.title }}
 
-                                <Link :href="route('todos.show', { todo: todo.id })" as="button" type="button" class="btn btn btn-warning btn-sm mr-2">VIEW</Link>
-                                <Link :href="route('todos.destroy', { todo: todo.id })" method="delete" as="button" type="button" class="btn btn-danger btn-sm">DEL</Link>
+                                <Link :href="route('todos.show', { todo: todo.id })" as="button" type="button" class="btn btn btn-dark btn-sm ml-2">
+                                    <i class="fa-solid fa-eye"></i>
+                                </Link>
+                                <Link :href="route('todos.destroy', { todo: todo.id })" method="delete" as="button" type="button" class="btn btn-danger btn-sm ml-2">
+                                    <i class="fa-sharp fa-solid fa-trash"></i>
+                                </Link>
                             </li>
                         </ul>
                     </template>
@@ -34,3 +46,9 @@ defineProps({ todos: Object })
         </ContainerLayout>
     </AuthenticatedLayout>
 </template>
+
+<scope lang="scss" scoped>
+    .text-line-through {
+        text-decoration: line-through;
+    }
+</scope>
