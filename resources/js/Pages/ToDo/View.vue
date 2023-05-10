@@ -47,7 +47,7 @@ function backToPreviousPage() {
                         </div>
                     </div>
 
-                    <Link :href="route('todos.edit', { todo: todo.id })" class="btn btn-light mr-3">Edit</Link>
+                    <Link :href="route('todos.edit', { todo: todo.id })" class="btn btn-outline-dark mr-3">Edit</Link>
                     <!-- <button type="button" class="btn btn-danger" @click="backToPreviousPage">Back</button> -->
                 </div>
             </div>

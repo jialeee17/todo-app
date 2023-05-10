@@ -30,7 +30,7 @@ function completedClass(todo) {
                             <li v-for="(todo, index) in todos" class="list-unstyled mb-2" :class="completedClass(todo)">
                                 {{ todo.title }}
 
-                                <Link :href="route('todos.show', { todo: todo.id })" as="button" type="button" class="btn btn btn-dark btn-sm ml-2">
+                                <Link :href="route('todos.show', { todo: todo.id })" as="button" type="button" class="btn btn btn-primary btn-sm ml-2">
                                     <i class="fa-solid fa-eye"></i>
                                 </Link>
                                 <Link :href="route('todos.destroy', { todo: todo.id })" method="delete" as="button" type="button" class="btn btn-danger btn-sm ml-2">
@@ -40,7 +40,7 @@ function completedClass(todo) {
                         </ul>
                     </template>
 
-                    <Link :href="route('todos.create')" as="button" type="button" class="btn btn-light">Create</Link>
+                    <Link :href="route('todos.create')" as="button" type="button" class="btn btn-outline-dark">Create</Link>
                 </div>
             </div>
         </ContainerLayout>

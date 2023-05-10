@@ -1,14 +1,18 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
-import { ref, onMounted } from 'vue';
 
 // Props
 const props = defineProps({ todos: Object })
 
 // Variables
 const form = useForm({
-    todos: []
+    todos: [
+        {
+            title: '',
+            description: ''
+        }
+    ]
 })
 
 // Functions
@@ -17,6 +21,10 @@ function addTodo() {
         title: '',
         description: ''
     });
+}
+
+function removeTodo(index) {
+    form.todos.splice(index, 1);
 }
 
 function submitForm() {
@@ -40,7 +48,7 @@ function backToPreviousPage() {
             <div class="row">
                 <div class="col">
                     <form v-if="form.todos.length > 0" class="mb-3" @submit.prevent="submitForm">
-                        <div v-for="(todo, index) in form.todos" :key="index">
+                        <div v-for="(todo, index) in form.todos" :key="index" class="mb-4">
                             <div class="form-group col-6 p-0">
                                 <label for="title">Title <b class="text-danger">*</b></label>
                                 <input type="text" class="form-control" id="title" name="title" placeholder="Title" v-model="todo.title" required>
@@ -50,13 +58,23 @@ function backToPreviousPage() {
                                 <label for="description">Description</label>
                                 <textarea name="description" class="form-control" id="description" placeholder="Description" v-model="todo.description"></textarea>
                             </div>
+
+                            <div class="btn-action mb-3">
+                                <!-- 'ADD' button will only show on last item.  -->
+                                <button v-if="index === form.todos.length - 1" type="button" class="btn btn btn-outline-primary btn-add mr-2" @click="addTodo">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                                <!-- 'Remove' button will show on every items EXCEPT first item.  -->
+                                <button v-if="index !== 0" type="button" class="btn btn-outline-danger btn-remove mr-2" @click="removeTodo(index)">
+                                    <i class="fa-sharp fa-solid fa-trash"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary" :disabled="form.processing">Save</button>
+                        <button type="submit" class="btn btn-outline-dark" :disabled="form.processing">Save</button>
                     </form>
                     <p v-else>Click the 'Add Todo' button to add your todo now!</p>
 
-                    <button type="button" class="btn btn-light mr-3" @click="addTodo">Add Todo</button>
                     <!-- <button type="button" class="btn btn-danger" @click="backToPreviousPage">Back</button> -->
                 </div>
             </div>
