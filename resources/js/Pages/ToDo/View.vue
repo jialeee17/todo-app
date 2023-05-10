@@ -55,11 +55,13 @@ function backToPreviousPage() {
     </AuthenticatedLayout>
 </template>
 
-<style scoped>
-    .title,
-    .description,
-    .status,
-    .created-at {
-        font-size: 1.125rem !important;
+<style lang="scss" scoped>
+    .details {
+        .title,
+        .description,
+        .status,
+        .created-at {
+            font-size: 1.125rem !important;
+        }
     }
 </style>

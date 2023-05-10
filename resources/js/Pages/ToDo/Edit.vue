@@ -77,84 +77,88 @@ onMounted(() => {
     </AuthenticatedLayout>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .button {
   position: relative;
   /* top: 50%; */
   width: 70px;
   height: 30px;
   /* overflow: hidden; */
-}
-.checkbox {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  opacity: 0;
-  cursor: pointer;
-  z-index: 3;
+
+  .checkbox {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 3;
+  }
+
+  .knobs,
+  .layer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  .knobs {
+    z-index: 2;
+  }
+  .layer {
+    background-color: #fcebeb;
+    transition: 0.3s ease all;
+    width: 100%;
+    z-index: 1;
+  }
+
+  &.btn-toggle {
+    .checkbox {
+      &:active {
+        & + .knobs:before {
+          width: 46px;
+          border-radius: 100px;
+        }
+      }
+      &:checked {
+        & + .knobs:before {
+          /* content: "ON"; */
+          content: "";
+          left: 42px;
+          background-color: #03a9f4;
+        }
+        &:active + .knobs:before {
+          margin-left: -26px;
+        }
+        & ~ .layer {
+          background-color: #ebf7fc;
+        }
+      }
+    }
+
+    .knobs:before {
+      /* content: "OFF"; */
+      content: "";
+      color: #fff;
+      background-color: #f44336;
+      border-radius: 50%;
+      font-size: 10px;
+      font-weight: bold;
+      text-align: center;
+      line-height: 1;
+      padding: 9px 4px;
+      position: absolute;
+      transition: 0.3s ease all, left 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
+      width: 30px;
+      height: 30px;
+    }
+  }
 }
 
 .button.r,
 .button.r .layer {
   border-radius: 100px;
-}
-
-.knobs,
-.layer {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-
-.knobs {
-  z-index: 2;
-}
-
-.layer {
-    background-color: #fcebeb;
-    transition: 0.3s ease all;
-    width: 100%;
-    z-index: 1;
-}
-
-.btn-toggle .knobs:before {
-  /* content: "OFF"; */
-  content: "";
-  color: #fff;
-  background-color: #f44336;
-  border-radius: 50%;
-  font-size: 10px;
-  font-weight: bold;
-  text-align: center;
-  line-height: 1;
-  padding: 9px 4px;
-  position: absolute;
-  transition: 0.3s ease all, left 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
-  width: 30px;
-  height: 30px;
-}
-
-.btn-toggle .checkbox:active + .knobs:before {
-  width: 46px;
-  border-radius: 100px;
-}
-
-.btn-toggle .checkbox:checked:active + .knobs:before {
-  margin-left: -26px;
-}
-
-.btn-toggle .checkbox:checked + .knobs:before {
-  /* content: "ON"; */
-  content: "";
-  left: 42px;
-  background-color: #03a9f4;
-}
-
-.btn-toggle .checkbox:checked ~ .layer {
-  background-color: #ebf7fc;
 }
 </style>
