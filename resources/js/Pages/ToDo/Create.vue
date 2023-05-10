@@ -22,6 +22,10 @@ function addTodo() {
 function submitForm() {
     form.post(route('todos.store'));
 }
+
+function backToPreviousPage() {
+    history.back();
+}
 </script>
 
 <template>
@@ -37,13 +41,11 @@ function submitForm() {
                 <div class="col">
                     <form v-if="form.todos.length > 0" class="mb-3" @submit.prevent="submitForm">
                         <div v-for="(todo, index) in form.todos" :key="index">
-                            <!-- Title -->
                             <div class="form-group col-6 p-0">
                                 <label for="title">Title <b class="text-danger">*</b></label>
                                 <input type="text" class="form-control" id="title" name="title" placeholder="Title" v-model="todo.title" required>
                                 <p v-if="form.errors['todos.0.title']" style="color: red;">{{ form.errors['todos.0.title'] }}</p>
                             </div>
-                            <!-- Description -->
                             <div class="form-group col-6 p-0">
                                 <label for="description">Description</label>
                                 <textarea name="description" class="form-control" id="description" placeholder="Description" v-model="todo.description"></textarea>
@@ -54,7 +56,8 @@ function submitForm() {
                     </form>
                     <p v-else>Click the 'Add Todo' button to add your todo now!</p>
 
-                    <button type="button" class="btn btn-light" @click="addTodo">Add Todo</button>
+                    <button type="button" class="btn btn-light mr-3" @click="addTodo">Add Todo</button>
+                    <button type="button" class="btn btn-danger" @click="backToPreviousPage">Back</button>
                 </div>
             </div>
         </ContainerLayout>

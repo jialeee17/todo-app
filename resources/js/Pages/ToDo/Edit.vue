@@ -19,6 +19,11 @@ function submitForm() {
     form.patch(route('todos.update', { todo: form.id }));
 }
 
+// Functions
+function backToPreviousPage() {
+    history.back();
+}
+
 // Computed Properties
 const isChecked = computed(() => form.status === 1 ? true : false)
 
@@ -45,18 +50,15 @@ onMounted(() => {
             <div class="row">
                 <div class="col">
                     <form @submit.prevent="submitForm">
-                        <!-- Title -->
                         <div class="form-group col-6 p-0">
                             <label for="title">Title <b class="text-danger">*</b></label>
                             <input type="text" class="form-control" id="title" name="title" placeholder="Title" v-model="form.title">
                             <p v-if="form.errors.title" style="color: red;">{{ form.errors.title }}</p>
                         </div>
-                        <!-- Description -->
                         <div class="form-group col-6 p-0">
                             <label for="description">Description</label>
                             <textarea name="description" class="form-control" id="description" placeholder="Description" v-model="form.description"></textarea>
                         </div>
-                        <!-- Status -->
                         <div class="form-group">
                             <label for="status">Status</label>
                             <div class="button btn-toggle r">
@@ -66,8 +68,8 @@ onMounted(() => {
                             </div>
                         </div>
 
-                        <!-- Submit Button -->
-                        <button type="submit" class="btn btn-primary" :disabled="form.processing">Save</button>
+                        <button type="submit" class="btn btn-primary mr-3" :disabled="form.processing">Save</button>
+                        <button type="button" class="btn btn-danger" @click="backToPreviousPage">Back</button>
                     </form>
                 </div>
             </div>

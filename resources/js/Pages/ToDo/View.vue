@@ -9,6 +9,11 @@ const props = defineProps({ todo: Object })
 // Computed Properties
 const todoStatus = computed(() => props.todo.status === 0 ? 'In-progress' : 'Completed')
 
+// Functions
+function backToPreviousPage() {
+    history.back();
+}
+
 </script>
 
 <template>
@@ -42,7 +47,8 @@ const todoStatus = computed(() => props.todo.status === 0 ? 'In-progress' : 'Com
                         </div>
                     </div>
 
-                    <Link :href="route('todos.edit', { todo: todo.id })" class="btn btn-light">Edit</Link>
+                    <Link :href="route('todos.edit', { todo: todo.id })" class="btn btn-light mr-3">Edit</Link>
+                    <button type="button" class="btn btn-danger" @click="backToPreviousPage">Back</button>
                 </div>
             </div>
         </ContainerLayout>
