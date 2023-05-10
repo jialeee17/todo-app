@@ -3,6 +3,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
 
+const props = defineProps({ userId: Number })
+
 // Functions
 function ajaxRequest(params) {
     $.ajax({
@@ -44,6 +46,13 @@ function columns() {
     ]
 }
 
+function queryParams(params) {
+    return {
+        ...params,
+        userId: props.userId
+    }
+}
+
 // Lifecycle Hooks
 onMounted(() => {
     $('#activity-log-table').bootstrapTable({
@@ -54,6 +63,7 @@ onMounted(() => {
         paginationVAlign: 'both',
         pageSize: 25,
         pageList:"[25, 50, 75, 100]",
+        queryParams: queryParams
     })
 })
 </script>

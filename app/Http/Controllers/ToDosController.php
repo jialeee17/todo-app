@@ -17,7 +17,13 @@ class ToDosController extends Controller
     public function index()
     {
         try {
-            $todos = Todos::all();
+            $user = Auth::user();
+
+            if (!$user) {
+                throw new Exception('User not found!');
+            }
+
+            $todos = Todos::where('user_id', $user->id)->get();
 
             return Inertia::render('ToDo/Index', [
                 'todos' => $todos
@@ -57,7 +63,12 @@ class ToDosController extends Controller
         ]);
 
         try {
-            $user = User::findOrFail(Auth::id());
+            $user = Auth::user();
+
+            if(!$user) {
+                throw new Exception('User not found!');
+            }
+
             $user->todos()->createMany($request->todos);
 
             return to_route('todos.index');
