@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RestoreCenterController;
 use App\Http\Controllers\ToDosController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,11 @@ Route::middleware('auth')->group(function () {
     // Activity Log
     Route::prefix('activityLog')->name('activityLog.')->group(function () {
         Route::get('/', [ActivityLogController::class, 'index'])->name('index');
+    });
+
+    // Restore Center
+    Route::prefix('restoreCenter')->name('restoreCenter.')->group(function () {
+        Route::get('/', [RestoreCenterController::class, 'index'])->name('index');
     });
 });
 

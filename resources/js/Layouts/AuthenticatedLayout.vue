@@ -47,6 +47,13 @@ const showingNavigationDropdown = ref(false);
                                     Activity Log
                                 </NavLink>
                             </div>
+
+                            <!-- Restore Center -->
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink :href="route('restoreCenter.index')" :active="route().current('restoreCenter.index')">
+                                    Restore Center
+                                </NavLink>
+                            </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
