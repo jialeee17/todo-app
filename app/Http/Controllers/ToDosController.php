@@ -16,24 +16,11 @@ class ToDosController extends Controller
      */
     public function index()
     {
-        try {
-            $user = Auth::user();
+        $todos = Todos::where('user_id', Auth::id())->get();
 
-            if (!$user) {
-                throw new Exception('User not found!');
-            }
-
-            $todos = Todos::where('user_id', $user->id)->get();
-
-            return Inertia::render('ToDo/Index', [
-                'todos' => $todos
-            ]);
-        } catch (Exception $e) {
-            return Inertia::render('Errors', [
-                'status' => 500,
-                'message' => $e->getMessage(),
-            ]);
-        }
+        return Inertia::render('ToDo/Index', [
+            'todos' => $todos
+        ]);
     }
 
     /**
@@ -41,14 +28,7 @@ class ToDosController extends Controller
      */
     public function create()
     {
-        try {
-            return Inertia::render('ToDo/Create');
-        } catch (Exception $e) {
-            return Inertia::render('Errors', [
-                'status' => 500,
-                'message' => $e->getMessage(),
-            ]);
-        }
+        return Inertia::render('ToDo/Create');
     }
 
     /**
@@ -56,28 +36,14 @@ class ToDosController extends Controller
      */
     public function store(Request $request)
     {
-        // Validation
         $request->validate([
             'todos.*.title' => 'required|string',
             'todos.*.description' => 'nullable|string'
         ]);
 
-        try {
-            $user = Auth::user();
+        Auth::user()->todos()->createMany($request->todos);
 
-            if(!$user) {
-                throw new Exception('User not found!');
-            }
-
-            $user->todos()->createMany($request->todos);
-
-            return to_route('todos.index');
-        } catch (Exception $e) {
-            return Inertia::render('Errors', [
-                'status' => 500,
-                'message' => $e->getMessage(),
-            ]);
-        }
+        return redirect()->route('todos.index')->with('message', 'Todos created!');
     }
 
     /**
@@ -85,18 +51,11 @@ class ToDosController extends Controller
      */
     public function show(string $id)
     {
-        try {
-            $todo = Todos::findOrFail($id);
+        $todo = Todos::findOrFail($id);
 
-            return Inertia::render('ToDo/View', [
-                'todo' => $todo
-            ]);
-        } catch (Exception $e) {
-            return Inertia::render('Errors', [
-                'status' => 500,
-                'message' => $e->getMessage(),
-            ]);
-        }
+        return Inertia::render('ToDo/View', [
+            'todo' => $todo
+        ]);
     }
 
     /**
@@ -104,18 +63,11 @@ class ToDosController extends Controller
      */
     public function edit(string $id)
     {
-        try {
-            $todo = Todos::findOrFail($id);
+        $todo = Todos::findOrFail($id);
 
-            return Inertia::render('ToDo/Edit', [
-                'todo' => $todo
-            ]);
-        } catch (Exception $e) {
-            return Inertia::render('Errors', [
-                'status' => 500,
-                'message' => $e->getMessage(),
-            ]);
-        }
+        return Inertia::render('ToDo/Edit', [
+            'todo' => $todo
+        ]);
     }
 
     /**
@@ -123,28 +75,19 @@ class ToDosController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // Validation
         $request->validate([
             'title' => 'required|string',
             'description' => 'nullable|string',
             'status' => 'required|boolean'
         ]);
+        $todo = Todos::findOrFail($id);
+        $todo->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'status' => $request->status,
+        ]);
 
-        try {
-            $todo = Todos::findOrFail($id);
-            $todo->update([
-                'title' => $request->title,
-                'description' => $request->description,
-                'status' => $request->status,
-            ]);
-
-            return to_route('todos.show', ['todo' => $id]);
-        } catch (Exception $e) {
-            return Inertia::render('Errors', [
-                'status' => 500,
-                'message' => $e->getMessage(),
-            ]);
-        }
+        return redirect()->route('todos.show', ['todo' => $id])->with('message', 'Todo updated!');
     }
 
     /**
@@ -152,16 +95,8 @@ class ToDosController extends Controller
      */
     public function destroy(string $id)
     {
-        try {
-            $todo = Todos::findOrFail($id);
-            $todo->delete();
+        Todos::findOrFail($id)->delete();
 
-            return to_route('todos.index');
-        } catch (Exception $e) {
-            return Inertia::render('Errors', [
-                'status' => 500,
-                'message' => $e->getMessage(),
-            ]);
-        }
+        return redirect()->back()->with('message', 'Tood deleted!');
     }
 }
