@@ -1,9 +1,11 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
-import { ref, onMounted } from 'vue';
+import { Head, usePage } from '@inertiajs/vue3';
+import { computed, onMounted } from 'vue';
 
-const props = defineProps({ userId: Number })
+const page = usePage()
+
+// Computed Properties (For display in template)
+// const user = computed(() => page.props.auth.user)
 
 // Functions
 function ajaxRequest(params) {
@@ -16,11 +18,11 @@ function ajaxRequest(params) {
         },
         error: function(jqXHR, textStatus, errorThrown) {
             // Handle error
-            console.log("Error: " + errorThrown);
+            // console.log("Error: " + errorThrown);
         },
         complete: function(jqXHR, textStatus) {
             // Handle completion of the request (regardless of success or error)
-            console.log("Request completed with status: " + textStatus);
+            // console.log("Request completed with status: " + textStatus);
         }
     });
 }
@@ -49,7 +51,7 @@ function columns() {
 function queryParams(params) {
     return {
         ...params,
-        userId: props.userId
+        userId: page.props.auth.user.id
     }
 }
 
@@ -77,7 +79,7 @@ onMounted(() => {
         </template>
 
         <ContainerLayout #content>
-            <div class="row">
+            <div class="row bg-white rounded p-3">
                 <div class="col">
                     <table id="activity-log-table"></table>
                 </div>
