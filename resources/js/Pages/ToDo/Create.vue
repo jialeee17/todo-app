@@ -1,6 +1,6 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import VButton from '../../Components/VButton.vue';
 
 // Props
 const props = defineProps({ todos: Object })
@@ -45,7 +45,7 @@ function backToPreviousPage() {
         </template>
 
         <ContainerLayout #content>
-            <div class="row">
+            <div class="row bg-white rounded p-3">
                 <div class="col">
                     <form v-if="form.todos.length > 0" class="mb-3" @submit.prevent="submitForm">
                         <div v-for="(todo, index) in form.todos" :key="index" class="mb-4">
@@ -61,17 +61,19 @@ function backToPreviousPage() {
 
                             <div class="btn-action mb-3">
                                 <!-- 'ADD' button will only show on last item.  -->
-                                <button v-if="index === form.todos.length - 1" type="button" class="btn btn btn-outline-primary btn-add mr-2" @click="addTodo">
+                                <VButton v-if="index === form.todos.length - 1" type="button" class="btn btn btn-outline-primary btn-add mr-2" @click="addTodo">
                                     <i class="fa-solid fa-plus"></i>
-                                </button>
-                                <!-- 'Remove' button will show on every items EXCEPT first item.  -->
-                                <button v-if="index !== 0" type="button" class="btn btn-outline-danger btn-remove mr-2" @click="removeTodo(index)">
+                                </VButton>
+                                <!-- 'Remove' button will show on every items AS LONG AS the list contains MORE THAN 1 item.  -->
+                                <VButton v-if="form.todos.length > 1" type="button" class="btn btn-outline-danger btn-remove mr-2" @click="removeTodo(index)">
                                     <i class="fa-sharp fa-solid fa-trash"></i>
-                                </button>
+                                </VButton>
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-outline-dark" :disabled="form.processing">Save</button>
+                        <VButton type="submit" class="btn btn-outline-dark" :disabled="form.processing">
+                            Save
+                        </VButton>
                     </form>
                     <p v-else>Click the 'Add Todo' button to add your todo now!</p>
 

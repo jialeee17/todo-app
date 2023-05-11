@@ -1,5 +1,4 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { ref, onMounted, computed } from 'vue';
 
@@ -47,7 +46,7 @@ onMounted(() => {
         </template>
 
         <ContainerLayout #content>
-            <div class="row">
+            <div class="row bg-white rounded p-3">
                 <div class="col">
                     <form @submit.prevent="submitForm">
                         <div class="form-group col-6 p-0">
