@@ -38,16 +38,18 @@ class ToDosObserver
      */
     public function updated(ToDos $toDos): void
     {
-        $description = '(ID: ' . $toDos->id . ') Todo item "' . $toDos->title . '" has been updated.';
+        if (!$toDos->wasChanged('deleted_at')) {
+            $description = '(ID: ' . $toDos->id . ') Todo item "' . $toDos->title . '" has been updated.';
 
-        $data = [
-            'user_id' => $toDos->user_id,
-            'todo_id' => $toDos->id,
-            'type' => ActivityLog::TYPE_UPDATE,
-            'description' => $description,
-        ];
+            $data = [
+                'user_id' => $toDos->user_id,
+                'todo_id' => $toDos->id,
+                'type' => ActivityLog::TYPE_UPDATE,
+                'description' => $description,
+            ];
 
-        ActivityLog::create($data);
+            ActivityLog::create($data);
+        }
     }
 
     /**
@@ -72,7 +74,16 @@ class ToDosObserver
      */
     public function restored(ToDos $toDos): void
     {
-        //
+        $description = '(ID: ' . $toDos->id . ') Todo item "' . $toDos->title . '" has been restored.';
+
+        $data = [
+            'user_id' => $toDos->user_id,
+            'todo_id' => $toDos->id,
+            'type' => ActivityLog::TYPE_RESTORE,
+            'description' => $description,
+        ];
+
+        ActivityLog::create($data);
     }
 
     /**

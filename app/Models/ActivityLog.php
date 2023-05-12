@@ -52,11 +52,13 @@ class ActivityLog extends Model
     const TYPE_CREATE = 'CREATE';
     const TYPE_UPDATE = 'UPDATE';
     const TYPE_DELETE = 'DELETE';
+    const TYPE_RESTORE = 'RESTORE';
 
     public static $types = [
         self::TYPE_CREATE,
         self::TYPE_UPDATE,
-        self::TYPE_DELETE
+        self::TYPE_DELETE,
+        self::TYPE_RESTORE
     ];
 
     /* -------------------------------------------------------------------------- */

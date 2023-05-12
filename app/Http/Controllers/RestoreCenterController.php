@@ -43,7 +43,9 @@ class RestoreCenterController extends Controller
      */
     public function restore(string $id)
     {
+        // NOTE: Restoring collection that has more than 1 item inside (e.g. Retrieve using 'get()') is like "mass operation". This will not dispatch any model events for the models that are restored:
         Todos::withTrashed()->where('id', $id)
+                        ->first()
                         ->restore();
 
         return redirect()->back()->with('message', 'Todo restored!');
