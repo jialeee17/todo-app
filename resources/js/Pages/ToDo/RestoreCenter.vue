@@ -47,6 +47,7 @@ function columns() {
         {
             title: 'Description',
             field: 'description',
+            formatter: descriptionFormatter,
         },
         {
             title: 'Deleted Time (UTC)',
@@ -59,6 +60,10 @@ function columns() {
             events: actionEvents()
         }
     ]
+}
+
+function descriptionFormatter(value, row, index, field) {
+    return value != null ? value : '';
 }
 
 function actionFormatter(value, row, index, field) {
