@@ -1,6 +1,5 @@
 <script setup>
 import { Head, useForm } from '@inertiajs/vue3';
-import VButton from '../../Components/VButton.vue';
 
 // Props
 const props = defineProps({ todos: Object })
