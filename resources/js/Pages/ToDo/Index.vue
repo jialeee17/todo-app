@@ -1,6 +1,6 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
-import { ref, watch } from 'vue';
+import { Head, Link, router } from '@inertiajs/vue3';
+import { ref, watch, onMounted } from 'vue';
 
 const props = defineProps({ todos: Object })
 
@@ -48,18 +48,20 @@ function completedClass(todo) {
                                 You're all done!.
                             </template>
                         </p>
-                        <ul class="todos-list p-0 mt-2">
-                            <li v-for="(todo, index) in todos" class="list-unstyled mb-2" :class="completedClass(todo)">
-                                {{ todo.title }}
+                        <div class="todos-list p-0 mt-2 mb-4">
+                            <div v-for="(todo, index) in todos" class="todo-list-item bg-dark d-flex justify-content-between align-items-center rounded shadow p-2 mb-3" data-aos="fade-in">
+                                <h4 class="title text-white mb-0" :class="completedClass(todo)">{{ todo.title }}</h4>
 
-                                <Link :href="route('todos.show', { todo: todo.id })" as="button" type="button" class="btn btn btn-primary btn-sm ml-2">
-                                    <i class="fa-solid fa-eye"></i>
-                                </Link>
-                                <Link :href="route('todos.destroy', { todo: todo.id })" method="delete" as="button" type="button" class="btn btn-danger btn-sm ml-2" preserve-scroll>
-                                    <i class="fa-sharp fa-solid fa-trash"></i>
-                                </Link>
-                            </li>
-                        </ul>
+                                <div class="btn-actions d-flex gap-2">
+                                    <Link :href="route('todos.show', { todo: todo.id })" as="button" type="button" class="btn btn btn-primary btn-sm">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </Link>
+                                    <Link :href="route('todos.destroy', { todo: todo.id })" method="delete" as="button" type="button" class="btn btn-danger btn-sm" preserve-scroll>
+                                        <i class="fa-sharp fa-solid fa-trash"></i>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
                     </template>
 
                     <!-- Flash Message -->
@@ -74,6 +76,13 @@ function completedClass(todo) {
 </template>
 
 <scope lang="scss" scoped>
+    .todos-list {
+        .title {
+            font-size: 1.125rem;
+        }
+    }
+
+    // Custom Utilities Class
     .text-line-through {
         text-decoration: line-through;
     }
