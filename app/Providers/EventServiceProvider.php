@@ -12,6 +12,15 @@ use Illuminate\Support\Facades\Event;
 class EventServiceProvider extends ServiceProvider
 {
     /**
+     * The model observers for your application.
+     *
+     * @var array
+     */
+    protected $observers = [
+        Todos::class => [ToDosObserver::class],
+    ];
+
+    /**
      * The event to listener mappings for the application.
      *
      * @var array<class-string, array<int, class-string>>
@@ -27,7 +36,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Todos::observe(ToDosObserver::class);
+        // Todos::observe(ToDosObserver::class);
     }
 
     /**

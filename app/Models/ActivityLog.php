@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\ToDos;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -31,6 +32,7 @@ class ActivityLog extends Model
      */
     protected $fillable = [
         'user_id',
+        'todo_id',
         'type',
         'description',
         'performed_by'
@@ -50,11 +52,13 @@ class ActivityLog extends Model
     const TYPE_CREATE = 'CREATE';
     const TYPE_UPDATE = 'UPDATE';
     const TYPE_DELETE = 'DELETE';
+    const TYPE_RESTORE = 'RESTORE';
 
     public static $types = [
         self::TYPE_CREATE,
         self::TYPE_UPDATE,
-        self::TYPE_DELETE
+        self::TYPE_DELETE,
+        self::TYPE_RESTORE
     ];
 
     /* -------------------------------------------------------------------------- */
@@ -63,5 +67,10 @@ class ActivityLog extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function todos()
+    {
+        return $this->belongsTo(ToDos::class, 'todo_id');
     }
 }

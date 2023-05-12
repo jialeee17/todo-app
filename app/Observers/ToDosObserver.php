@@ -21,25 +21,16 @@ class ToDosObserver
      */
     public function created(ToDos $toDos): void
     {
-        $description = 'Todo item (ID: ' . $toDos->id . ') "' . $toDos->title . '" has been created.';
+        $description = '(ID: ' . $toDos->id . ') Todo item "' . $toDos->title . '" has been created.';
 
         $data = [
             'user_id' => $toDos->user_id,
+            'todo_id' => $toDos->id,
             'type' => ActivityLog::TYPE_CREATE,
             'description' => $description,
         ];
 
         ActivityLog::create($data);
-
-        // Log a message to the 'activitylog' channel
-        Log::channel('activitylog')->info('New todo item is created', [
-            'ID' => $toDos->id,
-            'User ID' => $toDos->user_id,
-            'Title' => $toDos->title,
-            'Description' => $toDos->description,
-            'Status' => $toDos->status,
-            'Time' => $toDos->created_at,
-        ]);
     }
 
     /**
@@ -47,25 +38,18 @@ class ToDosObserver
      */
     public function updated(ToDos $toDos): void
     {
-        $description = 'Todo item (ID: ' . $toDos->id . ') "' . $toDos->title . '" has been updated.';
+        if (!$toDos->wasChanged('deleted_at')) {
+            $description = '(ID: ' . $toDos->id . ') Todo item "' . $toDos->title . '" has been updated.';
 
-        $data = [
-            'user_id' => $toDos->user_id,
-            'type' => ActivityLog::TYPE_UPDATE,
-            'description' => $description,
-        ];
+            $data = [
+                'user_id' => $toDos->user_id,
+                'todo_id' => $toDos->id,
+                'type' => ActivityLog::TYPE_UPDATE,
+                'description' => $description,
+            ];
 
-        ActivityLog::create($data);
-
-        // Log a message to the 'activitylog' channel
-        Log::channel('activitylog')->info('Todo item is updated', [
-            'ID' => $toDos->id,
-            'User ID' => $toDos->user_id,
-            'Title' => $toDos->title,
-            'Description' => $toDos->description,
-            'Status' => $toDos->status,
-            'Time' => $toDos->created_at,
-        ]);
+            ActivityLog::create($data);
+        }
     }
 
     /**
@@ -73,25 +57,16 @@ class ToDosObserver
      */
     public function deleted(ToDos $toDos): void
     {
-        $description = 'Todo item (ID: ' . $toDos->id . ') "' . $toDos->title . '" has been deleted.';
+        $description = '(ID: ' . $toDos->id . ') Todo item "' . $toDos->title . '" has been deleted.';
 
         $data = [
             'user_id' => $toDos->user_id,
+            'todo_id' => $toDos->id,
             'type' => ActivityLog::TYPE_DELETE,
             'description' => $description,
         ];
 
         ActivityLog::create($data);
-
-        // Log a message to the 'activitylog' channel
-        Log::channel('activitylog')->info('Todo item is deleted', [
-            'ID' => $toDos->id,
-            'User ID' => $toDos->user_id,
-            'Title' => $toDos->title,
-            'Description' => $toDos->description,
-            'Status' => $toDos->status,
-            'Time' => $toDos->created_at,
-        ]);
     }
 
     /**
@@ -99,7 +74,16 @@ class ToDosObserver
      */
     public function restored(ToDos $toDos): void
     {
-        //
+        $description = '(ID: ' . $toDos->id . ') Todo item "' . $toDos->title . '" has been restored.';
+
+        $data = [
+            'user_id' => $toDos->user_id,
+            'todo_id' => $toDos->id,
+            'type' => ActivityLog::TYPE_RESTORE,
+            'description' => $description,
+        ];
+
+        ActivityLog::create($data);
     }
 
     /**
