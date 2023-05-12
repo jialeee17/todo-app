@@ -1,6 +1,6 @@
 <script setup>
 import { Head, Link, router } from '@inertiajs/vue3';
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch } from 'vue';
 
 const props = defineProps({ todos: Object })
 
@@ -17,11 +17,33 @@ watch(
     );
 
 // Functions
+function todoListItemId(id) {
+    return `todo-list-item-${id}`
+}
+
 function completedClass(todo) {
     return {
         'text-muted': todo.status === 1 ? true : false,
         'text-line-through': todo.status === 1 ? true : false
     }
+}
+
+function deleteTodo(id) {
+    // Instead of using '.eq' to select el, use smth more specific class name such as 'id'
+    const todoList = $(`#todo-list-item-${id}`);
+    const animationDuration = todoList.attr('data-aos-duration');
+
+    // // Remove the AOS animation from the element
+    todoList.removeAttr("data-aos");
+    // // Add a new AOS animation to the element
+    todoList.attr("data-aos", "fade-left");
+
+    // Remove AOS Aniamation
+    todoList.removeClass('aos-animate');
+
+    setTimeout(() => {
+        router.delete(route('todos.destroy', { todo: id }));
+    }, animationDuration - 200)
 }
 </script>
 
@@ -49,16 +71,16 @@ function completedClass(todo) {
                             </template>
                         </p>
                         <div class="todos-list p-0 mt-2 mb-4">
-                            <div v-for="(todo, index) in todos" class="todo-list-item bg-dark d-flex justify-content-between align-items-center rounded shadow p-2 mb-3" data-aos="fade-in">
+                            <div v-for="(todo, index) in todos" :id="todoListItemId(todo.id)" class="todo-list-item bg-dark d-flex justify-content-between align-items-center rounded shadow p-2 mb-3" data-aos="fade-in" data-aos-duration="1000">
                                 <h4 class="title text-white mb-0" :class="completedClass(todo)">{{ todo.title }}</h4>
 
                                 <div class="btn-actions d-flex gap-2">
                                     <Link :href="route('todos.show', { todo: todo.id })" as="button" type="button" class="btn btn btn-primary btn-sm">
                                         <i class="fa-solid fa-eye"></i>
                                     </Link>
-                                    <Link :href="route('todos.destroy', { todo: todo.id })" method="delete" as="button" type="button" class="btn btn-danger btn-sm" preserve-scroll>
+                                    <VButton type="button" class="btn btn-danger btn-sm" @click="deleteTodo(todo.id)">
                                         <i class="fa-sharp fa-solid fa-trash"></i>
-                                    </Link>
+                                    </VButton>
                                 </div>
                             </div>
                         </div>

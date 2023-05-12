@@ -1,8 +1,8 @@
 import './bootstrap';
 import '../css/app.css';
 
-import AOS from 'aos'
-import 'aos/dist/aos.css'
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
