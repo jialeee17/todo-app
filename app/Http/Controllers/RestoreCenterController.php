@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Todo;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
-use App\Models\Todo;
+use Illuminate\Support\Facades\Auth;
 
 class RestoreCenterController extends Controller
 {
@@ -23,6 +24,7 @@ class RestoreCenterController extends Controller
         $todosNotFiltered = Todo::count();
 
         $todos = Todo::onlyTrashed()->with('user')
+                    ->where('user_id', Auth::id())
                     ->orderBy('deleted_at', 'DESC')
                     ->paginate($limit, ['*'], 'page', $page);
 
