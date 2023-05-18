@@ -5,18 +5,18 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\User;
 use Inertia\Inertia;
-use App\Models\ToDos;
+use App\Models\ToDo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ToDosController extends Controller
+class ToDoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $todos = Todos::where('user_id', Auth::id())->get();
+        $todos = Todo::where('user_id', Auth::id())->get();
 
         return Inertia::render('ToDo/Index', [
             'todos' => $todos
@@ -41,7 +41,7 @@ class ToDosController extends Controller
             'todos.*.description' => 'nullable|string'
         ]);
 
-        Auth::user()->todos()->createMany($request->todos);
+        Auth::user()->todo()->createMany($request->todos);
 
         return redirect()->route('todos.index')->with('message', 'Todos created!');
     }

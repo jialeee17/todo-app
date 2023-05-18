@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
-use App\Models\ToDos;
+use App\Models\ToDo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -69,8 +69,8 @@ class ActivityLog extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function todos()
+    public function todo()
     {
-        return $this->belongsTo(ToDos::class, 'todo_id');
+        return $this->belongsTo(ToDo::class, 'todo_id');
     }
 }

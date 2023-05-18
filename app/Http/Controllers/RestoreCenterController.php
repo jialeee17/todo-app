@@ -14,14 +14,14 @@ class RestoreCenterController extends Controller
         return Inertia::render('ToDo/RestoreCenter');
     }
 
-    public function getTrashedTodosData(Request $request)
+    public function getTrashedTodoData(Request $request)
     {
         $offset = $request->offset;
         $limit = $request->limit;
         $page = $offset == 0 ? 1 : ($offset / $limit) + 1; // The page number to use as the starting point for pagination.
 
         // Get the total number of records, regardless of pagination or filtering.
-        $todosNotFiltered = Todos::count();
+        $todosNotFiltered = Todo::count();
 
         $todos = Todo::onlyTrashed()->with('user')
                     ->where('user_id', Auth::id())
@@ -46,7 +46,7 @@ class RestoreCenterController extends Controller
     public function restore(string $id)
     {
         // NOTE: Restoring collection that has more than 1 item inside (e.g. Retrieve using 'get()') is like "mass operation". This will not dispatch any model events for the models that are restored:
-        Todos::withTrashed()->where('id', $id)
+        Todo::withTrashed()->where('id', $id)
                         ->first()
                         ->restore();
 
