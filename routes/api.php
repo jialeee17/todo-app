@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ToDosController;
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\RestoreCenterController;
 
@@ -23,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Restore Center
 Route::prefix('restoreCenter')->name('restoreCenter.')->group(function () {
-    Route::get('/data', [RestoreCenterController::class, 'getTrashedTodosData'])->name('data');
+    Route::get('/data', [RestoreCenterController::class, 'getTrashedTodoData'])->name('data');
     Route::post('/restore/{id}', [RestoreCenterController::class, 'restore'])->name('restore');
 });
 

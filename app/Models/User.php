@@ -57,9 +57,9 @@ class User extends Authenticatable
     /* -------------------------------------------------------------------------- */
     /*                                Relationship                                */
     /* -------------------------------------------------------------------------- */
-    public function todos()
+    public function todo()
     {
-        return $this->hasMany(ToDos::class);
+        return $this->hasMany(ToDo::class);
     }
 
     public function activityLog()
