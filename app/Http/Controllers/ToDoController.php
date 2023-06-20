@@ -51,7 +51,7 @@ class ToDoController extends Controller
      */
     public function show(string $id)
     {
-        $todo = Todos::findOrFail($id);
+        $todo = Todo::findOrFail($id);
 
         return Inertia::render('ToDo/View', [
             'todo' => $todo
@@ -63,7 +63,7 @@ class ToDoController extends Controller
      */
     public function edit(string $id)
     {
-        $todo = Todos::findOrFail($id);
+        $todo = Todo::findOrFail($id);
 
         return Inertia::render('ToDo/Edit', [
             'todo' => $todo
@@ -80,7 +80,7 @@ class ToDoController extends Controller
             'description' => 'nullable|string',
             'status' => 'required|boolean'
         ]);
-        $todo = Todos::findOrFail($id);
+        $todo = Todo::findOrFail($id);
         $todo->update([
             'title' => $request->title,
             'description' => $request->description,
@@ -95,7 +95,7 @@ class ToDoController extends Controller
      */
     public function destroy(string $id)
     {
-        Todos::findOrFail($id)->delete();
+        Todo::findOrFail($id)->delete();
 
         return redirect()->back()->with('message', 'Tood deleted!');
     }

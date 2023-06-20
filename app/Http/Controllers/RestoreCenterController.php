@@ -16,6 +16,7 @@ class RestoreCenterController extends Controller
 
     public function getTrashedTodoData(Request $request)
     {
+        $userId = $request->userId;
         $offset = $request->offset;
         $limit = $request->limit;
         $page = $offset == 0 ? 1 : ($offset / $limit) + 1; // The page number to use as the starting point for pagination.
@@ -24,7 +25,7 @@ class RestoreCenterController extends Controller
         $todosNotFiltered = Todo::count();
 
         $todos = Todo::onlyTrashed()->with('user')
-                    ->where('user_id', Auth::id())
+                    ->where('user_id', $userId)
                     ->orderBy('deleted_at', 'DESC')
                     ->paginate($limit, ['*'], 'page', $page);
 
